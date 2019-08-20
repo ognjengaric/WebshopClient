@@ -42,7 +42,7 @@ export default {
         display: flex;
     }
 
-    .account-button, .home-button {
+    .account-button {
         color: #999;
         background-color: inherit;
         cursor: pointer; 
@@ -50,6 +50,16 @@ export default {
         outline: none;
         padding: 14px 16px;  
     }
+
+    .home-button {
+        color: #999;
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: auto;
+        padding: 14px 16px;  
+    }
+    
 
     .account-button:hover, .home-button:hover{
         color: orangered;
