@@ -2,11 +2,7 @@
   <aside class="list-container">
       <h4 class="list-header">CATEGORIES</h4>
       <ul class="category-list">
-          <li class="list-item">Item</li>
-          <li class="list-item">Item</li>
-          <li class="list-item">Item</li>
-          <li class="list-item">Item</li>
-          <li class="list-item">Item</li>
+          <li class="list-item" v-for="category in categories" v-bind:key="category.id">{{category.name}}</li>
       </ul>
   </aside>
 </template>
@@ -14,12 +10,21 @@
 <script>
 
 export default {
+    data() {
+        return {
+            categories : []
+        }
+    },
 
-    // created() {
-    //     this.$http.get('http://localhost:9090/WebShopREST/test').then(data => {
-    //         console.log(data);
-    //     })
-    // }
+    created() {
+        this.$http.get('http://localhost:9090/WebShopREST/categories').then(response => {
+            this.categories = response.body;
+        }, () =>{
+            setTimeout(() => {
+                this.$router.go();
+            }, 10000);
+        })
+    }
 
 }
 </script>
@@ -27,10 +32,12 @@ export default {
 <style>
     
     .list-container {
-        width: 20%;
-        height: 70vh;
+        width: 15%;
+        height: 65vh;
         margin: 10px 0px;
         position: sticky;
+        border: 1px solid #e9e9e9;
+        border-radius: 10px;
         top: 0;
     }
 
@@ -44,8 +51,6 @@ export default {
     .list-header {
         padding: 10px 10px;
         margin: 10px 10px 0px 10px; 
-        border: 1px solid #e9e9e9;
-        background-color: #f2f2f2;
         border-radius: 2px;
         color: #999;    
     }

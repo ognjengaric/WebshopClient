@@ -1,6 +1,7 @@
 <template>
   <nav class="nav">
-      <button class="home-button"><router-link class="home-link" to="/">Home</router-link></button>
+      <button class="nav-button"><router-link class="nav-link" to="/">Home</router-link></button>
+      <button class="nav-button"><router-link class="nav-link" to="/">All ads</router-link></button>
       <div class="account-container">
           <button class="account-button">Account</button>
           <div class="dropdown-content">
@@ -51,7 +52,7 @@ export default {
         padding: 14px 16px;  
     }
 
-    .home-button {
+    .nav-button {
         color: #999;
         background-color: inherit;
         border: none;
@@ -61,7 +62,7 @@ export default {
     }
     
 
-    .account-button:hover, .home-button:hover{
+    .account-button:hover, .nav-button:hover{
         color: orangered;
     }
 
@@ -91,12 +92,12 @@ export default {
         cursor: pointer;
     }
 
-    .home-link{
+    .nav-link{
         text-decoration: none;
         color: #999;
     }
 
-    .home-link:hover {
+    .nav-link:hover {
         color: orangered;
         cursor: pointer;
     }

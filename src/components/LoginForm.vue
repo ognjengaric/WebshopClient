@@ -30,7 +30,7 @@ export default {
   
   methods: {
     submitInfo(){
-      this.$http.post('http://localhost:9090/WebShopREST/login', this.user, {headers:this.headers}).then(response => {
+      this.$http.post('http://localhost:9090/WebShopREST/login', this.user, {headers:this.headers}).then(() => {
         alert('Successfull login!');
       }, response => {
         if(!response.ok){
