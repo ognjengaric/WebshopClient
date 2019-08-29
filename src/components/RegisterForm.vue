@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { baseURL } from '../baseConfig'
 
 export default {
 
@@ -54,7 +55,7 @@ export default {
 
   methods: {
     submitInfo(){
-      this.$http.post('http://localhost:9090/WebShopREST/register', this.user, {headers:this.headers}).then(() => {
+      this.$http.post(`${baseURL}/register`, this.user, {headers:this.headers}).then(() => {
         alert('Successfull register!');
         this.$router.push('/login');
       }, response => {
@@ -63,12 +64,18 @@ export default {
         }
       })
     }
+  },
+
+  beforeCreate(){
+    if (this.$session.exists()) {
+       this.$router.push('/')
+    }
   }
 
 }
 </script>
 
-<style>
+<style scoped>
 
 .main-container {
   position: absolute;

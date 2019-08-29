@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { baseURL } from '../baseConfig';
 
 export default {
     data() {
@@ -17,12 +18,12 @@ export default {
     },
 
     created() {
-        this.$http.get('http://localhost:9090/WebShopREST/categories').then(response => {
+        this.$http.get(`${baseURL}/categories`).then(response => {
             this.categories = response.body;
         }, () =>{
-            setTimeout(() => {
-                this.$router.go();
-            }, 10000);
+            // setTimeout(() => {
+            //     this.$router.go();
+            // }, 10000);
         })
     }
 

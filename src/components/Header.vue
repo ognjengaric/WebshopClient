@@ -34,7 +34,7 @@ export default {
 
         replaceIcon(){
             if(this.filterIcon === "search-ad.svg"){
-                this.filterIcon = "search-user.svg"
+                this.filterIcon = "search-user.svg";
             }                
             else{
                 this.filterIcon = "search-ad.svg";

@@ -13,6 +13,8 @@
 
 <script>
 
+import { baseURL } from '../baseConfig';
+
 export default {
 
   data() {
@@ -30,13 +32,25 @@ export default {
   
   methods: {
     submitInfo(){
-      this.$http.post('http://localhost:9090/WebShopREST/login', this.user, {headers:this.headers}).then(() => {
-        alert('Successfull login!');
+      this.$http.post(`${baseURL}/login`, this.user, {headers:this.headers}).then((response) => {
+        if(response.ok){
+          this.$session.start(); 
+          this.$session.set('accessToken', response.bodyText);
+          this.$http.headers.common['Authorization'] = 'Bearer ' + response.bodyText;
+          this.$router.push('/')
+          this.$emit('loggedIn');
+        }
       }, response => {
         if(!response.ok){
           alert('Unsuccessfull login!');
         }
       })
+    }
+  },
+
+  beforeCreate(){
+    if (this.$session.exists()) {
+       this.$router.push('/')
     }
   }
 }

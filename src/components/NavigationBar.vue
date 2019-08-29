@@ -3,8 +3,9 @@
       <button class="nav-button"><router-link class="nav-link" to="/">Home</router-link></button>
       <button class="nav-button"><router-link class="nav-link" to="/">All ads</router-link></button>
       <div class="account-container">
-          <button class="account-button">Account</button>
-          <div class="dropdown-content">
+          <button v-if="roleObject.loggedIn()" @click="logOut" class="account-button">Log out</button>
+          <button v-if="!roleObject.loggedIn()" class="account-button">Account</button>
+          <div v-if="!roleObject.loggedIn()" class="dropdown-content">
               <router-link class="link" to="/login">Log in</router-link>
               <router-link class="link" to="/register">Register</router-link>
           </div>
@@ -14,9 +15,34 @@
 
 <script>
 
+import { baseURL } from '../baseConfig';
+
 export default {
 
+  props : {
+    roleObject: {
+      type: Object
+    }
+  },
 
+  data() {
+    return {
+      headers : {
+        'Content-Type' : 'application/json'
+      }
+    }
+  },
+
+  methods: {
+      logOut(){
+          this.$http.post(`${baseURL}/logout`, this.$session.get('accessToken'), {headers:this.headers}).then(() =>{
+          this.$emit('logOut');
+          this.$session.destroy();
+          }, () =>{
+              alert('Unsuccessfull logout!');
+          })
+      }
+  }
 }
 </script>
 
