@@ -119,8 +119,7 @@ export default {
 }
 
 fieldset {
-  border: none;
-  
+  border: none;  
 }
 
 legend {

@@ -2,6 +2,7 @@
   <main>
       <section>
         <article v-for="ad in favoriteAds" v-bind:key="ad.name">
+          <!-- <div class="like-dislike-ratio">+{{ad.numberOfLikes - ad.numberOfDislikes}}</div> -->
           <svg width="90%" height="80%">
             <image class="image-container" @click="displayAd(ad.name)"  v-bind:href="`data:image/svg+xml;base64,${ad.image}`"  width="100%" height="100%"/> 
             <image v-if="roleObject.isBuyer" class="make-favorite" @click="handleFavoriteAction" :href="require(`../assets/${favoriteIcon}`)"  width="15%" height="15%"/> <!-- On click za favorite kad je ulogovan -->
@@ -122,6 +123,14 @@ export default {
     margin: -15px 30% 15px 30%;
     color: white;
   }
+
+  /* .like-dislike-ratio {
+    width: 100%;
+    text-align: right;
+    color: green;
+    border-radius: 5px;
+    margin: 15px 5px -25% 0;
+  } */
 
   .name-container {
     width: 100%;
