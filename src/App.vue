@@ -2,9 +2,9 @@
   <div id="app">
     <navigation-bar v-bind:roleObject="roleObject" v-on:logOut="logOut"></navigation-bar>
     <router-view v-on:loggedIn="getUserInfo"></router-view>
-    <div class="main">
+    <div v-if="($route.path === '/' || $route.path === '/ads')" class="main">
       <router-view name="aside"></router-view>
-      <router-view name="main" v-bind:roleObject="roleObject"></router-view>
+      <router-view v-bind:key="$route.path" name="main" v-bind:roleObject="roleObject"></router-view>
     </div>
   </div>
 </template>
@@ -58,9 +58,7 @@ export default {
           if(role === 'Administrator'){
             this.roleObject.isAdmin = true;
           }
-
-      //    this.user = response.body;
-
+          
         }, () =>{
             // setTimeout(() => {
             //     this.$router.go();

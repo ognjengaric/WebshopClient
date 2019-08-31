@@ -50,13 +50,25 @@ export default {
   },
 
   created() {
-    this.$http.get(`${baseURL}/favorite-ads`).then(response => {
-      this.favoriteAds = response.body;
-    }, () =>{
+    if(this.$route.path === '/'){
+          this.$http.get(`${baseURL}/favorite-ads`).then(response => {
+            this.favoriteAds = response.body;
+      }, () =>{
         // setTimeout(() => {
         // this.$router.go();
         // }, 10000);
-    })
+      })
+    } else {
+      if(this.$route.path === '/ads'){
+          this.$http.get(`${baseURL}/ads`).then(response => {
+            this.favoriteAds = response.body;
+        }, () =>{
+        // setTimeout(() => {
+        // this.$router.go();
+        // }, 10000);
+        })
+      }
+    }
   }
 }
 </script>

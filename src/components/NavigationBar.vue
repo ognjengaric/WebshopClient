@@ -1,8 +1,10 @@
 <template>
   <nav class="nav">
       <button class="nav-button"><router-link class="nav-link" to="/">Home</router-link></button>
-      <button class="nav-button"><router-link class="nav-link" to="/">All ads</router-link></button>
+      <button class="nav-button"><router-link class="nav-link" to="/ads">All ads</router-link></button>
       <div class="account-container">
+          <button v-if="roleObject.isSeller && !($route.path === '/seller')" class="account-button" @click="displaySellerPage()">Profile page</button>
+          <button v-if="roleObject.isSeller" class="account-button">Messages</button>
           <button v-if="roleObject.loggedIn()" @click="logOut" class="account-button">Log out</button>
           <button v-if="!roleObject.loggedIn()" class="account-button">Account</button>
           <div v-if="!roleObject.loggedIn()" class="dropdown-content">
@@ -34,14 +36,19 @@ export default {
   },
 
   methods: {
-      logOut(){
-          this.$http.post(`${baseURL}/logout`, this.$session.get('accessToken'), {headers:this.headers}).then(() =>{
-          this.$emit('logOut');
-          this.$session.destroy();
-          }, () =>{
-              alert('Unsuccessfull logout!');
-          })
-      }
+    logOut(){
+        this.$http.post(`${baseURL}/logout`, this.$session.get('accessToken'), {headers:this.headers}).then(() =>{
+        this.$emit('logOut');
+        this.$session.destroy();
+        this.$router.push('/');
+        }, () =>{
+            alert('Unsuccessfull logout!');
+        })
+    },
+
+    displaySellerPage(){
+        this.$router.push('/seller');
+    }
   }
 }
 </script>
@@ -61,7 +68,6 @@ export default {
         float: right;
         overflow: hidden;
         height: auto;
-        border-left: 1px solid #e9e9e9; 
         
     }
 
@@ -75,7 +81,8 @@ export default {
         cursor: pointer; 
         border: none;
         outline: none;
-        padding: 14px 16px;  
+        padding: 14px 16px;
+        border-left: 1px solid #e9e9e9;   
     }
 
     .nav-button {
