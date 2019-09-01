@@ -4,7 +4,7 @@
         <article v-for="ad in favoriteAds" v-bind:key="ad.name">
           <!-- <div class="like-dislike-ratio">+{{ad.numberOfLikes - ad.numberOfDislikes}}</div> -->
           <svg width="90%" height="80%">
-            <image class="image-container" @click="displayAd(ad.name)"  v-bind:href="`data:image/svg+xml;base64,${ad.image}`"  width="100%" height="100%"/> 
+            <image class="image-container" @click="displayAd(ad.name)"  v-bind:href="`${ad.image}`"  width="100%" height="100%"/> 
             <image v-if="roleObject.isBuyer" class="make-favorite" @click="handleFavoriteAction" :href="require(`../assets/${favoriteIcon}`)"  width="15%" height="15%"/> <!-- On click za favorite kad je ulogovan -->
           </svg>
           <div class="price-container">{{ad.price}}$</div>

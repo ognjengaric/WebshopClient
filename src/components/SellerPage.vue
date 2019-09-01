@@ -25,6 +25,7 @@
             <ul class="ad-list">
                 <li v-for="ad in adsToDisplay" v-bind:key="ad.name" @click="displayAd(ad.name)">{{ad.name}}</li>              
             </ul>
+            <button class="new-ad-button" @click="displayNewAdForm()">New Ad</button>
             </div>
             <div class="review-list-container"></div>
         </div>  
@@ -53,30 +54,22 @@ export default {
             break;
             case "Pending":
                 {
-                    let pendingAds = [];
-                    this.sellerData.deliveredProductAds.forEach(element => {
-                        if(element.status === "PENDING"){
-                            pendingAds.push(element);
-                        }
-                    });
-                    this.adsToDisplay = pendingAds;
+                    this.adsToDisplay = this.sellerData.pendingProductAds;
                 }
             break;
             case "Delivered": 
                 {
-                    let deliveredAds = [];
-                    this.sellerData.deliveredProductAds.forEach(element => {
-                        if(element.status === "DELIVERED"){
-                            deliveredAds.push(element);
-                        }
-                    });
-                    this.adsToDisplay = deliveredAds;
+                    this.adsToDisplay = this.sellerData.deliveredProductAds;
                 }
             }
         },
 
         displayAd(adName){
             this.$router.push({name:'ad', params:{id:adName}})
+        },
+
+        displayNewAdForm(){
+            this.$router.push('/create-ad');
         }
     },
 
@@ -91,8 +84,7 @@ export default {
             this.sellerData = response.body.role;
             this.username = response.body.username;
             this.adsToDisplay = response.body.role.publishedAds;
-            console.log(this.sellerData);
-      }, () =>{
+      }, () => {
 
       })
     }
@@ -164,6 +156,24 @@ export default {
         background-color:#f8f8f8;
         cursor: pointer;
         color: orangered;
+    }
+
+    .new-ad-button {
+        border: none;
+        outline: none;
+        width: 20%;  
+        margin-top: 20px;
+        margin-left: 10px;
+        padding: 10px;
+        color: #999;
+        background-color: #f8f8f8;
+        cursor: pointer;
+        border-radius: 3px;        
+    }
+
+    .new-ad-button:hover {
+        color: orangered;
+        background-color: #f2f2f2;
     }
 
 </style>

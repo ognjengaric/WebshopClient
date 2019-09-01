@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <form @submit.prevent="submitInfo">
-      <h2 class="heading">Register</h2>
+      <h2>Register</h2>
       <div class="input-container">
         <fieldset>
           <legend>Personal info</legend>
@@ -59,7 +59,7 @@ export default {
         alert('Successfull register!');
         this.$router.push('/login');
       }, response => {
-        if(!response.ok){
+        if(response.status === 400){
           alert('User already exists!');
         }
       })
@@ -89,7 +89,7 @@ export default {
   padding: 10px 15px 40px 15px;
 } 
 
-.heading {
+h2 {
   color: #999; 
 }
 

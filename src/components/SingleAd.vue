@@ -2,7 +2,7 @@
   <div class="main-container">
       <div class="image-container">
         <svg width="100%" height="100%">
-            <image v-bind:href="`data:image/svg+xml;base64,${ad.image}`"  width="100%" height="100%"/> 
+            <image v-bind:href="`${ad.image}`"  width="100%" height="100%"/> 
         </svg>
       </div>
       <div class="info-container">

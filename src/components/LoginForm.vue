@@ -41,7 +41,7 @@ export default {
           this.$emit('loggedIn');
         }
       }, response => {
-        if(!response.ok){
+        if(response.status === 400){
           alert('Unsuccessfull login!');
         }
       })
