@@ -5,7 +5,6 @@
           <!-- <div class="like-dislike-ratio">+{{ad.numberOfLikes - ad.numberOfDislikes}}</div> -->
           <svg width="90%" height="80%">
             <image class="image-container" @click="displayAd(ad.name)"  v-bind:href="`${ad.image}`"  width="100%" height="100%"/> 
-            <image v-if="roleObject.isBuyer" class="make-favorite" @click="handleFavoriteAction" :href="require(`../assets/${favoriteIcon}`)"  width="15%" height="15%"/> <!-- On click za favorite kad je ulogovan -->
           </svg>
           <div class="price-container">{{ad.price}}$</div>
           <div class="name-container">{{ad.name}}</div>
@@ -29,21 +28,11 @@ export default {
   
   data() {
       return {
-          favoriteIcon : "favorite-inactive.svg",
           favoriteAds : []
       }
     },
 
   methods: {
-    handleFavoriteAction(){
-      if(this.favoriteIcon === "favorite-inactive.svg"){
-        this.favoriteIcon = "favorite-active.svg";
-      }                
-      else{
-        this.favoriteIcon ="favorite-inactive.svg";
-      }  
-    }, 
-
     displayAd(adName){
       this.$router.push({name:'ad', params:{id:adName}})
     }
@@ -75,17 +64,8 @@ export default {
 
 <style scoped>
 
-  .make-favorite {
-    z-index: 10;
-    cursor: pointer;
-  }
-
-  .make-favorite:hover {
-    border: 1px solid black;   
-  }
 
   .image-container {
-    z-index: -1;
     cursor: pointer;
   }
 

@@ -6,6 +6,11 @@
         </svg>
       </div>
       <div class="info-container">
+                <div v-if="userRole='Buyer' && isFavorite" class="make-favorite-container">
+                    <svg width="40px" height="40px">
+                        <image href="../assets/favorite-active.svg" width="100%" height="100%"/> 
+                    </svg>
+                </div>
                 <div class="like-dislike-container">
                     <div class="like-container">
                         <svg width="25px" height="25px">
@@ -21,8 +26,8 @@
                      {{ad.numberOfDislikes}}
                 </div>       
                 <div class="title-container">{{ad.name}}</div>
-          <div class="description-container">{{ad.description}}</div>
-          <div class="columns">
+            <div class="description-container">{{ad.description}}</div>
+            <div class="columns">
                 <div class="city-container">
                     <fieldset>
                         <legend>City</legend>
@@ -44,26 +49,69 @@
                     </fieldset>
                 </div>
             </div>
-      </div>
-  </div>
+            <div>
+                <button v-if="isBuyer">Order</button>
+                <button v-if="isBuyer && !isFavorite" @click="addToFavorites">Add to favorites</button>
+                <button v-if="isBuyer && isFavorite"  @click="removeFromFavorites">Remove from favorites</button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import { baseURL } from '../baseConfig';
 
 export default {
+
+    data() {
+      return {
+            ad : {},
+            isBuyer : "",
+            isFavorite: false,
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+      }
+    },
     
     beforeCreate(){
         this.$http.get(`${baseURL}/ad/${this.$route.params.id}`).then((response) => {
             this.ad = response.body;
-        })       
+        });             
     },
 
-    data() {
-      return {
-          ad : {},
-      }
+    methods : {
+        addToFavorites(){
+            this.$http.post(`${baseURL}/make-favorite/${this.ad.name}`, this.$session.get('accessToken'), {headers:this.headers}).then((response) => {
+                this.isFavorite = true;
+            });  
+        },
+
+        removeFromFavorites(){
+            this.$http.post(`${baseURL}/remove-favorite/${this.ad.name}`, this.$session.get('accessToken'), {headers:this.headers}).then((response) => {
+                this.isFavorite = false;
+            });  
+        }
     },
+    
+    created(){
+        if (this.$session.exists()) {
+            this.$http.get(`${baseURL}/data/${this.$session.get('accessToken')}`).then(response => {
+                if(response.body.role.name === 'Buyer'){
+                    this.isBuyer = true;
+                    response.body.role.favoriteAds.forEach(element => {
+                        if(element.name === this.$route.params.id){
+                            this.isFavorite = true;
+                        }
+                    });
+                }
+
+            }, () => {
+
+            });
+        }
+    },
+
 
 }
 </script>
@@ -103,13 +151,16 @@ export default {
 
     }
 
-    .like-dislike-container {
-        border-radius: 5px; 
+    .like-dislike-container{
         padding: 5px;
         display: flex;
         align-items: center;
         margin-left: 75%;
     }
+
+     .make-favorite-container {
+        padding: 10px;
+     }
 
     .like-container, .dislike-container {
         margin: 0px 5px;
@@ -152,6 +203,23 @@ export default {
         text-align: left;
         font-size: 0.9rem;
         color: #999;
+    }
+
+    button {
+        border: none;
+        outline: none;  
+        margin: 10px;
+        padding: 10px;
+        color: #999;
+        background-color: #e9e9e9;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+
+    button:hover {
+        color: orangered;
+        background-color: #f2f2f2;
     }
 
 </style>

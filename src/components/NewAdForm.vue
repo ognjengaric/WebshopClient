@@ -34,7 +34,7 @@ export default {
         return {
             ad: {
                 name: "",
-                price: 0,
+                price: "",
                 description: "",
                 city: "",
                 expirationDate: "",
@@ -66,7 +66,7 @@ export default {
         },
 
         submitInfo(){
-            this.$http.post(`${baseURL}/post-ad/${this.username}`, this.ad, {headers:this.headers}).then((response) => {
+            this.$http.post(`${baseURL}/post-ad/${this.username}`, this.ad, {headers:this.headers}).then(() => {
                 this.$router.push('/seller');
             }, response => {
                 if(response.status === 400){

@@ -3,6 +3,7 @@ import categoryList from './components/CategoryList.vue';
 import adsView from './components/AdsView.vue'
 import singleAd from './components/SingleAd.vue';
 import sellerPage from './components/SellerPage.vue';
+import buyerPage from './components/BuyerPage.vue';
 import newAdForm from './components/NewAdForm.vue';
 
 import loginFrom from './components/LoginForm.vue';
@@ -15,5 +16,6 @@ export default [
     {path: '/register', component: registerForm},
     {path: '/ad/:id', name: 'ad', component: singleAd},
     {path: '/seller', component: sellerPage},
+    {path: '/buyer', component: buyerPage},
     {path: '/create-ad', component: newAdForm}
 ]
